@@ -1,78 +1,84 @@
 import doctest
 
+import doctest
 
-class Kettle:
-    def __init__(self, capacity: float, water_level: float, temperature: float):
+
+class Car:
+    def __init__(self, brand: str, model: str, fuel_tank_capacity: float, current_fuel_level: float):
         """
-        Создание и подготовка к работе объекта "Чайник"
-        :param capacity: Объем чайника
-        :param water_level: Уровень воды в чайнике
-        :param temperature: температура воды в чайнике
+        Создание и подготовка к работе объекта "Машина"
+
+        :param brand: Марка автомобиля
+        :param model: Модель автомобиля
+        :param fuel_tank_capacity: Объем топливного бака
+        :param current_fuel_level: Текущий уровень топлива
 
         Примеры:
-        >>> kettle = Kettle(1000, 0, 10.5)  # инициализация экземпляра класса
+        >>> car = Car("Toyota", "Camry", 60, 30)  # инициализация экземпляра класса
         """
-        if not isinstance(capacity, (int, float)):
-            raise TypeError("Объем чайника должен быть типа int или float")
-        if capacity <= 0:
-            raise ValueError("Объем чайника должен быть положительным числом")
-        self.capacity = capacity
+        if not isinstance(fuel_tank_capacity, (int, float)):
+            raise TypeError("Объем топливного бака должен быть типа int или float")
+        if fuel_tank_capacity <= 0:
+            raise ValueError("Объем топливного бака должен быть положительным числом")
+        self.fuel_tank_capacity = fuel_tank_capacity
 
-        if not isinstance(water_level, (int, float)):
-            raise TypeError("Уровень воды должен быть int или float")
-        if not (0 <= water_level <= capacity):
-            raise ValueError("Уровень воды должен быть в пределах от 0 до объема чайника")
-        self.water_level = water_level
+        if not isinstance(current_fuel_level, (int, float)):
+            raise TypeError("Текущий уровень топлива должен быть int или float")
+        if not (0 <= current_fuel_level <= fuel_tank_capacity):
+            raise ValueError("Текущий уровень топлива должен быть в пределах от 0 до объема топливного бака")
+        self.current_fuel_level = current_fuel_level
 
-        if not isinstance(temperature, (int, float)):
-            raise TypeError("Температура воды должна быть int или float")
-        if not (0 <= temperature <= 100):
-            raise ValueError("Температура воды олжна быть в пределах от 0 до макс.температуры в чайнике")
-        self.temperature = temperature
+        self.brand = brand
+        self.model = model
 
-    def is_empty_kettle(self) -> bool:
+    def drive(self, distance: float) -> None:
         """
-        Функция которая проверяет, является ли чайник пустым
+        Проехать определенное расстояние на машине.
 
-        :return: Является ли чайник пустым
+        :param distance: Расстояние для преодоления
 
-        Примеры:
-        >>> kettle = Kettle(1000, 0, 10.5)
-        >>> kettle.is_empty_kettle()
+        :raise ValueError: Если расстояние превышает текущий уровень топлива, вызываем ошибку
+
+        Примеры: Условием конкретной задачи необходимо определить расход топлива
         """
+        car = Car("Toyota", "Camry", 60, 40)
+        car.drive(200)
+
+        if not isinstance(distance, (int, float)):
+            raise TypeError("Расстояние в км должно быть int или float")
+        if car.current_fuel_level * 6 < distance:  # Пуcть 6 = const = расход топлива (можно сделать полем)
+            raise ValueError("Текущуго количества топлива не хватит на дистанцию")
         ...
 
-    def boil_water(self, high_temp: float) -> None:
+    def refuel(self, fuel_amount: float) -> None:
         """
-        Закипятить воду в чайнике.
+        Пополнить топливо в баке.
 
-        :param high_temp: желаемая температура после кипячения
+        :param fuel_amount: Количество добавляемого топлива
+
+        :raise ValueError: Если количество добавляемого топлива превышает свободное место в баке, вызываем ошибку
 
         Примеры:
         """
-        kettle = Kettle(1000, 500, 10.5)
-        kettle.boil_water(100)
+        car = Car("Toyota", "Camry", 60, 40)
+        car.refuel(20)
 
-        if not isinstance(high_temp, (int, float)):
-            raise TypeError("Температура воды должна быть типа int или float")
-        if high_temp > 100 or high_temp < kettle.temperature:
-            raise ValueError("Температура воды должна быть в пределах возможностей чайника")
+        if not isinstance(fuel_amount, (int, float)):
+            raise TypeError("Количество литров топлива должно быть int или float")
+        if car.fuel_tank_capacity - car.current_fuel_level < fuel_amount:
+            raise ValueError("Заливааемое топливо превышает объём бака")
         ...
 
-    def pour_tea(self, cups: int) -> None:
+    def get_mileage(self) -> float:
         """
-        Налить чай в чашки.
+        Получить пробег машины.
 
-        :param cups: Количество чашек (можно реализовать отдельным классом с полем volume)
-
-        :raise ValueError: Если количество чашек больше доступного объема чайника, вызываем ошибку
+        :return: Пробег машины
 
         Примеры:
-        >>> kettle = Kettle(1000, 1000, 10.5)
-        >>> kettle.pour_tea(4)
+        >>> car = Car("Toyota", "Camry", 60, 40)
+        >>> car.get_mileage()
         """
-        # Нужна проверка на суммарный объём чашек, чтобы он не превышал объём воды в чайнике
-        # То, как она будет описана, зависит от полей класса чашки
         ...
 
     if __name__ == "__main__":

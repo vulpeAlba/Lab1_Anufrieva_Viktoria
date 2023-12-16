@@ -1,83 +1,86 @@
 import doctest
 
-import doctest
 
-
-class Car:
-    def __init__(self, brand: str, model: str, fuel_tank_capacity: float, current_fuel_level: float):
+class Store:
+    def __init__(self, name: str, floor_area: float, products: dict, product_capacity: int):
         """
-        Создание и подготовка к работе объекта "Машина"
+        Создание и подготовка к работе объекта "Магазин"
 
-        :param brand: Марка автомобиля
-        :param model: Модель автомобиля
-        :param fuel_tank_capacity: Объем топливного бака
-        :param current_fuel_level: Текущий уровень топлива
+        :param name: Название магазина
+        :param floor_area: Общая площадь магазина
+        :param products: Словарь с продуктами и их количеством в магазине
 
         Примеры:
-        >>> car = Car("Toyota", "Camry", 60, 30)  # инициализация экземпляра класса
+        >>> store = Store("Grocery Store", 1000, {"Apples": 50, "Bread": 100}, 300)  # инициализация экземпляра класса
         """
-        if not isinstance(fuel_tank_capacity, (int, float)):
-            raise TypeError("Объем топливного бака должен быть типа int или float")
-        if fuel_tank_capacity <= 0:
-            raise ValueError("Объем топливного бака должен быть положительным числом")
-        self.fuel_tank_capacity = fuel_tank_capacity
+        if not isinstance(floor_area, (int, float)):
+            raise TypeError("Площадь магазина должна быть типа int или float")
+        if floor_area <= 0:
+            raise ValueError("Площадь магазина должна быть положительным числом")
+        self.floor_area = floor_area
 
-        if not isinstance(current_fuel_level, (int, float)):
-            raise TypeError("Текущий уровень топлива должен быть int или float")
-        if not (0 <= current_fuel_level <= fuel_tank_capacity):
-            raise ValueError("Текущий уровень топлива должен быть в пределах от 0 до объема топливного бака")
-        self.current_fuel_level = current_fuel_level
+        if not isinstance(products, dict):
+            raise TypeError("Продукты должны быть представлены в виде словаря")
+        self.products = products
 
-        self.brand = brand
-        self.model = model
+        if not isinstance(product_capacity, int):
+            raise TypeError("Вместимость магазина должна быть типа int")
+        if floor_area <= 0:
+            raise ValueError("Вместимость магазина должна быть положительным числом")
+        self.product_capacity = product_capacity
 
-    def drive(self, distance: float) -> None:
+        self.name = name
+
+    def add_product(self, product_name: str, quantity: int) -> None:
         """
-        Проехать определенное расстояние на машине.
+        Добавление продукта в магазин.
 
-        :param distance: Расстояние для преодоления
+        :param product_name: Название продукта
+        :param quantity: Количество добавляемого продукта
 
-        :raise ValueError: Если расстояние превышает текущий уровень топлива, вызываем ошибку
+        :raise ValueError: Если количество добавляемого продукта превышает свободное место в магазине, вызываем ошибку
 
-        Примеры: Условием конкретной задачи необходимо определить расход топлива
+        Примеры:
         """
-        car = Car("Toyota", "Camry", 60, 40)
-        car.drive(200)
+        store = Store("Grocery Store", 1000, {"Apples": 50, "Bread": 100}, 300)
+        store.add_product("Milk", 20)
 
-        if not isinstance(distance, (int, float)):
-            raise TypeError("Расстояние в км должно быть int или float")
-        if car.current_fuel_level * 6 < distance:  # Пуcть 6 = const = расход топлива (можно сделать полем)
-            raise ValueError("Текущуго количества топлива не хватит на дистанцию")
+        if not isinstance(quantity, int):
+            raise TypeError("Количество добавляемого товара должно быть int")
+        if store.product_capacity < sum(store.products.values()) + quantity:
+            raise ValueError("Добавляемому товару не хватит места в магазине")
         ...
 
-    def refuel(self, fuel_amount: float) -> None:
+    def sell_product(self, product_name: str, quantity: int) -> None:
         """
-        Пополнить топливо в баке.
+        Продажа продукта из магазина.
 
-        :param fuel_amount: Количество добавляемого топлива
+        :param product_name: Название продукта
+        :param quantity: Количество продукта для продажи
 
-        :raise ValueError: Если количество добавляемого топлива превышает свободное место в баке, вызываем ошибку
+        *Можно подсчитывать количество товаров и добавить проверку на лимит продуктов в магазине
+        :raise ValueError: Если количество продукта для продажи превышает количество доступного продукта, вызываем ошибку
 
         Примеры:
         """
-        car = Car("Toyota", "Camry", 60, 40)
-        car.refuel(20)
+        store = Store("Grocery Store", 1000, {"Apples": 50, "Bread": 100}, 300)
+        store.sell_product("Apples", 10)
 
-        if not isinstance(fuel_amount, (int, float)):
-            raise TypeError("Количество литров топлива должно быть int или float")
-        if car.fuel_tank_capacity - car.current_fuel_level < fuel_amount:
-            raise ValueError("Заливааемое топливо превышает объём бака")
+        if not isinstance(quantity, int):
+            raise TypeError("Количество добавляемого товара должно быть int")
+        if store.products[product_name] < quantity:
+            raise ValueError("Запрашиваемого товара не хватает в магазине")
         ...
 
-    def get_mileage(self) -> float:
+    def calculate_revenue(self) -> float:
         """
-        Получить пробег машины.
+        Рассчитать выручку магазина.
 
-        :return: Пробег машины
+        :return: Выручка магазина
 
         Примеры:
-        >>> car = Car("Toyota", "Camry", 60, 40)
-        >>> car.get_mileage()
+        >>> store = Store("Grocery Store", 1000, {"Apples": 50, "Bread": 100}, 300)
+        >>> store.calculate_revenue()
         """
         ...
 
