@@ -5,7 +5,7 @@ class Library:
         self.books = books  # Список книг
 
     def get_next_book_id(self):
-        if len(self.books) == 0:
+        if not self.books:
             return 1
         else:
             last_book = self.books[-1]
