@@ -1,35 +1,3 @@
-class School:
-    def __init__(self, number, city):
-        self._number = number
-        self._city = city
-
-    @property
-    def number(self):
-        return self._number
-
-    @property
-    def city(self):
-        return self._city
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}(name={self.number!r}, author={self.city!r})"
-
-    def __str__(self):
-        return f"Школа №{self.number}"
-
-
-class PrimarySchool:
-    def __init__(self, number, city, childNum):
-        super().__init__(number, city)
-        self.childNum = childNum
-
-
-class SecondarySchool:
-    def __init__(self, number, city, childNum, shift):
-        super().__init__(number, city)
-        self.childNum = childNum
-        self.shift = shift
-
 class Appliances:
     """
     Базовый класс для бытовой техники.
